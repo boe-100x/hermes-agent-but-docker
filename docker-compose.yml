@@ -1,0 +1,22 @@
+services:
+  hermes-agent:
+    image: nousresearch/hermes-agent:latest
+    platform: linux/${DOCKER_ARCH:-amd64}
+    container_name: hermes-agent
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      - TERMINAL_ENV=docker
+    volumes:
+      - ./.hermes-agent:/opt/data
+    ports:
+      - "127.0.0.1:9119:9119"
+    entrypoint: ["/bin/bash", "-c"]
+    command:
+      - |
+        /opt/hermes/docker/entrypoint.sh gateway run &
+        /opt/hermes/docker/entrypoint.sh dashboard --host 0.0.0.0 --insecure &
+        wait -n
+    stdin_open: true
+    tty: true

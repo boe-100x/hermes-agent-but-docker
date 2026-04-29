@@ -1,0 +1,9 @@
+# Claude Cli
+.claude/settings.local.json
+
+# Environment
+.env
+
+# Hermes data
+.hermes-agent/**
+!.hermes-agent/.gitkeep
